@@ -15,6 +15,10 @@ public abstract class Hand {
 	protected ArrayList<Card> getCards() {
 		return cards;
 	}
+	protected void setCards(ArrayList<Card> cards)
+	{
+		this.cards = cards;
+	}
 
 	public void Draw(Deck d) {
 		cards.add(d.Draw());

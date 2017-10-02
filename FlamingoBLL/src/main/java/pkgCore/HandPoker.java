@@ -1,5 +1,7 @@
 package pkgCore;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -14,20 +16,76 @@ public class HandPoker extends Hand {
 		this.setHS(new HandScorePoker());
 	}
 
+	protected void setCards(ArrayList<Card> cards)
+	{
+		super.setCards(cards);
+		
+	}
+	
+	protected HandScore getHandScore()
+	{
+		return (HandScore) super.getHS();
+	}
+	
 	@Override
 	public HandScore ScoreHand() {
 		// TODO : Implement this method... call each of the 'is' methods (isRoyalFlush,
 		// etc) until
 		// one of the hands is true, then score the hand
-		HandScorePoker HS = (HandScorePoker) super.getHS();
+
 		Collections.sort(super.getCards());
-		if (isRoyalFlush()) {
-			HS.seteHandStrength(eHandStrength.RoyalFlush); 
-		} else if (isStraightFlush()) {
+		HandScore HS = this.getHS();
 
+		try {
+			
+			//	c = structure of class 'Hand'
+			Class<?> c = Class.forName("pkgCore.HandPoker");
+			
+			//	Create an instance of Hand
+			Object inst = c.newInstance();
+			ArrayList<Card> cardsInHand = this.getCards();
+			
+			Method mSetHand = c.getDeclaredMethod("setCards", ArrayList.class);
+			mSetHand.invoke(inst, cardsInHand);
+			
+			for (eHandStrength eHS : eHandStrength.values()) {
+				
+				Method mEval = c.getDeclaredMethod(eHS.getEvalMethod(), null);
+				//	Make the private method accessible 
+				mEval.setAccessible(true);
+				if ((boolean) mEval.invoke(inst, null))
+				{
+					break;
+				}
+			}
+			
+			Method mGetHandScore = c.getDeclaredMethod("getHandScore", null);
+			
+			HS = (HandScore) mGetHandScore.invoke(inst, null);
+			
+
+
+		} catch (ClassNotFoundException x) {
+			x.printStackTrace();
+		} catch (IllegalAccessException x) {
+			x.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		return null;
+		this.setHS((HandScorePoker) HS);
+		return HS;
+		
 	}
 
 	public boolean isRoyalFlush() {
@@ -52,12 +110,14 @@ public class HandPoker extends Hand {
 		if (super.getCards().get(eCardNo.FIRST.getiCardNo()).geteRank() == super.getCards()
 				.get(eCardNo.FOURTH.getiCardNo()).geteRank()) {
 
-			HS.seteHandStrength(eHandStrength.FourOfAKind);
+		   HS.seteHandStrength(eHandStrength.FourOfAKind);
 			HS.setHiCard(super.getCards().get(eCardNo.FIRST.getiCardNo()));
 			HS.setLoCard(null);
 			ArrayList<Card> kickers = new ArrayList<Card>();
 			kickers.add(super.getCards().get(eCardNo.FIFTH.getiCardNo()));
 			HS.setKickers(kickers);
+			this.setHS(HS);
+			
 			bisFourOfAKind = true;
 
 		} else if (super.getCards().get(eCardNo.SECOND.getiCardNo()).geteRank() == super.getCards()
@@ -68,6 +128,7 @@ public class HandPoker extends Hand {
 			ArrayList<Card> kickers = new ArrayList<Card>();
 			kickers.add(super.getCards().get(eCardNo.FIRST.getiCardNo()));
 			HS.setKickers(kickers);
+			this.setHS(HS);
 			bisFourOfAKind = true;
 		}
 
