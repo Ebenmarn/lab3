@@ -21,7 +21,7 @@ public class HandPokerTest {
 		
 		HandScorePoker HSP = (HandScorePoker) hp.ScoreHand();
 		
-		System.out.println(HSP.geteHandStrength().toString());
+		//System.out.println(HSP.geteHandStrength().toString());
 		
 		assertEquals("Four of a Kind",HSP.geteHandStrength().toString());
 		assertEquals(eRank.TWO,HSP.getHiCard().geteRank());
@@ -33,4 +33,28 @@ public class HandPokerTest {
 		
 	}
 
+	@Test
+	public void Hand2() {
+		
+		HandPoker hp = new HandPoker();
+		hp.AddCard(new Card(eSuit.CLUBS,eRank.FOUR));
+		hp.AddCard(new Card(eSuit.CLUBS,eRank.TWO));
+		hp.AddCard(new Card(eSuit.SPADES,eRank.TWO));
+		hp.AddCard(new Card(eSuit.CLUBS,eRank.FIVE));
+		hp.AddCard(new Card(eSuit.HEARTS,eRank.TWO));
+		
+		System.out.println(hp.getCards().size());
+		
+
+		HandScorePoker HSP = (HandScorePoker) hp.ScoreHand();
+		
+		System.out.println(HSP.geteHandStrength().toString());
+		
+		
+		
+		
+	}
+	
+	
+	
 }
