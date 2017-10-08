@@ -160,9 +160,22 @@ public class HandPoker extends Hand {
 	public boolean isStraightFlush() {
 		System.out.println("Running SF");
 		boolean bisStraightFlush = false;
-		if(isStraight()&&isFlush())
-		{bisStraightFlush = true;}
-		return bisStraightFlush;
+		int iDiff=0;
+		int i=0;
+		if((this.getCards().get(0).geteRank()==eRank.ACE)&&(this.getCards().get(4).geteRank()==eRank.ACE))
+		{i=1;}
+		for(;i<this.getCards().size()-1;i++){
+			iDiff=(this.getCards().get(i).geteRank().getiRankNbr())
+					-(this.getCards().get(i+1).geteRank().getiRankNbr());
+			if(iDiff==1) {
+				bisStraightFlush = true;
+				System.out.println("Running aaa");
+			}
+			bisStraightFlush = false;
+			System.out.println("Running SF");
+			break;
+		}
+			return bisStraightFlush;
 	}
 
 	public boolean isFourOfAKind() {
