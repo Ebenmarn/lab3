@@ -157,7 +157,40 @@ public class HandPoker extends Hand {
 		}
 		return bisStraightFlush;
 	}
+	/*
+	public boolean isFourOfAKind() {
+		System.out.println("Running 3");
+		boolean bisFourOfAKind = false;
+		//System.out.println("SIZE");
+		// System.out.println(this.getCRC().size());
+		if (this.getCRC() == null) {
+			System.out.println("NULL");
+		}
+		Frequency();
+		if (this.getCRC() == null) {
+			System.out.println("STILL NULL");
+		}
+		if (this.getCRC().size() == 2) {
+			if (this.getCRC().get(0).getiCnt() == 4) {
+				bisFourOfAKind = true;
+				HandScorePoker HSP = (HandScorePoker) this.getHS();
+				HSP.seteHandStrength(eHandStrength.FourOfAKind);
 
+				int iGetCard = this.getCRC().get(0).getiCardPosition();
+
+				HSP.setHiCard(this.getCards().get(iGetCard));
+				HSP.setLoCard(null);
+
+				HSP.setKickers(FindTheKickers(this.getCRC()));
+
+				this.setHS(HSP);
+
+			}
+		}
+		return bisFourOfAKind;
+	}
+	
+	*/	
 	public boolean isFourOfAKind() {
 		boolean bisFourOfAKind = false;
 		HandScorePoker HS = (HandScorePoker) super.getHS();
@@ -212,7 +245,30 @@ public class HandPoker extends Hand {
 		}
 		return bisFullHouse;
 	}
-
+/*
+ public boolean isFlush() {
+		boolean bisFlush = false;
+		Frequency();
+		int i = 0;
+		
+		for (;i<this.getCRC().size();i++) {
+			if (this.getCRC().get(i).geteSuit() 
+				== this.getCRC().get(i+1).geteSuit() {
+				bisFlush = true;
+			}
+			else {
+				return bisFlush = false;
+				break;
+			}
+			
+		}
+		HandScorePoker HSP = (HandScorePoker) this.getHS();
+		HSP.seteHandStrength(eHandStrength.Straight);
+		HSP.setHiCard(this.getCards().get(iGetCard));
+				HSP.setLoCard(null);
+			HSP.setKickers(FindTheKickers(this.getCRC()))
+		return bisFlush;
+ */
 	public boolean isFlush() {
 		boolean bisFlush = false;
 
@@ -240,6 +296,35 @@ public class HandPoker extends Hand {
 
 	}
 
+	/*public boolean isStraight() {
+		boolean bisStraight = false;
+		Frequency();
+		int i = 0;
+		if (this.getCRC().get(0).geteRank()==eRank.ACE 
+		&& (this.getCRC().get(1).geteRank()==eRank.FIVE)) {
+			i=2;
+		
+		}
+		for (;i<this.getCRC().size();i++) {
+			if (this.getCRC().get(i).geteRank().getiRankNbr() 
+				- this.getCRC().get(i+1).geteRank().getiRankNbr() ==1) {
+				bisStraight = true;
+			}
+			else {
+				return bisStraight = false;
+				break;
+			}
+			
+		}
+		HandScorePoker HSP = (HandScorePoker) this.getHS();
+		HSP.seteHandStrength(eHandStrength.Straight);
+		HSP.setHiCard(this.getCards().get(iGetCard));
+				HSP.setLoCard(null);
+			HSP.setKickers(FindTheKickers(this.getCRC()))
+		return bisStraight;
+	}
+	*/
+	
 	public boolean isStraight() {
 		System.out.println("Running S");
 		boolean bisStraight = false;
