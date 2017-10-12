@@ -157,7 +157,7 @@ public class HandPoker extends Hand {
 		}
 		return bisStraightFlush;
 	}
-	/*
+	
 	public boolean isFourOfAKind() {
 		System.out.println("Running 3");
 		boolean bisFourOfAKind = false;
@@ -190,38 +190,8 @@ public class HandPoker extends Hand {
 		return bisFourOfAKind;
 	}
 	
-	*/	
-	public boolean isFourOfAKind() {
-		boolean bisFourOfAKind = false;
-		HandScorePoker HS = (HandScorePoker) super.getHS();
-
-		if (super.getCards().get(eCardNo.FIRST.getiCardNo()).geteRank() == super.getCards()
-				.get(eCardNo.FOURTH.getiCardNo()).geteRank()) {
-
-			HS.seteHandStrength(eHandStrength.FourOfAKind);
-			HS.setHiCard(super.getCards().get(eCardNo.FIRST.getiCardNo()));
-			HS.setLoCard(null);
-			ArrayList<Card> kickers = new ArrayList<Card>();
-			kickers.add(super.getCards().get(eCardNo.FIFTH.getiCardNo()));
-			HS.setKickers(kickers);
-			this.setHS(HS);
-
-			bisFourOfAKind = true;
-
-		} else if (super.getCards().get(eCardNo.SECOND.getiCardNo()).geteRank() == super.getCards()
-				.get(eCardNo.FIFTH.getiCardNo()).geteRank()) {
-			HS.seteHandStrength(eHandStrength.FourOfAKind);
-			HS.setHiCard(super.getCards().get(eCardNo.SECOND.getiCardNo()));
-			HS.setLoCard(null);
-			ArrayList<Card> kickers = new ArrayList<Card>();
-			kickers.add(super.getCards().get(eCardNo.FIRST.getiCardNo()));
-			HS.setKickers(kickers);
-			this.setHS(HS);
-			bisFourOfAKind = true;
-		}
-
-		return bisFourOfAKind;
-	}
+		
+	
 
 	public boolean isFullHouse() {
 		System.out.println("Running Full");
@@ -245,114 +215,57 @@ public class HandPoker extends Hand {
 		}
 		return bisFullHouse;
 	}
-/*
+
  public boolean isFlush() {
 		boolean bisFlush = false;
-		Frequency();
+		
 		int i = 0;
 		
-		for (;i<this.getCRC().size();i++) {
-			if (this.getCRC().get(i).geteSuit() 
-				== this.getCRC().get(i+1).geteSuit() {
+		for (;i<super.getCards().size()-1;i++) {
+			if (super.getCards().get(i).geteSuit() 
+				== super.getCards().get(i+1).geteSuit()) {
 				bisFlush = true;
 			}
 			else {
 				return bisFlush = false;
-				break;
 			}
 			
 		}
+		
 		HandScorePoker HSP = (HandScorePoker) this.getHS();
-		HSP.seteHandStrength(eHandStrength.Straight);
-		HSP.setHiCard(this.getCards().get(iGetCard));
-				HSP.setLoCard(null);
-			HSP.setKickers(FindTheKickers(this.getCRC()))
+		HSP.seteHandStrength(eHandStrength.Flush);
+	
+	
 		return bisFlush;
- */
-	public boolean isFlush() {
-		boolean bisFlush = false;
+ }
+ 
 
-		int iCardCnt = super.getCards().size();
-		int iSuitCnt = 0;
-
-		for (eSuit eSuit : eSuit.values()) {
-			for (Card c : super.getCards()) {
-				if (eSuit == c.geteSuit()) {
-					iSuitCnt++;
-				}
-			}
-			if (iSuitCnt > 0)
-				break;
-		}
-
-		if (iSuitCnt == iCardCnt) {
-			bisFlush = true;
-			HandScorePoker HSP = (HandScorePoker) this.getHS();
-			HSP.seteHandStrength(eHandStrength.Flush);
-		} else {
-			bisFlush = false;
-		}
-		return bisFlush;
-
-	}
-
-	/*public boolean isStraight() {
+	public boolean isStraight() {
 		boolean bisStraight = false;
-		Frequency();
+
 		int i = 0;
-		if (this.getCRC().get(0).geteRank()==eRank.ACE 
-		&& (this.getCRC().get(1).geteRank()==eRank.FIVE)) {
-			i=2;
+		if (this.getCards().get(0).geteRank()==eRank.ACE 
+		&& (this.getCards().get(1).geteRank()==eRank.FIVE)) {
+			i=1;
 		
 		}
-		for (;i<this.getCRC().size();i++) {
-			if (this.getCRC().get(i).geteRank().getiRankNbr() 
-				- this.getCRC().get(i+1).geteRank().getiRankNbr() ==1) {
+		for (;i<this.getCards().size()-1;i++) {
+			if (((this.getCards().get(i).geteRank().getiRankNbr()) 
+				- (this.getCards().get(i+1).geteRank().getiRankNbr())) == -1) {
 				bisStraight = true;
 			}
 			else {
-				return bisStraight = false;
-				break;
+				return bisStraight =false;
 			}
 			
 		}
-		HandScorePoker HSP = (HandScorePoker) this.getHS();
-		HSP.seteHandStrength(eHandStrength.Straight);
-		HSP.setHiCard(this.getCards().get(iGetCard));
-				HSP.setLoCard(null);
-			HSP.setKickers(FindTheKickers(this.getCRC()))
+			HandScorePoker HSP = (HandScorePoker) this.getHS();
+			HSP.seteHandStrength(eHandStrength.Straight);
+			
 		return bisStraight;
 	}
-	*/
 	
-	public boolean isStraight() {
-		System.out.println("Running S");
-		boolean bisStraight = false;
-		int iDiff = 0;
-		int i = 0;
-		if ((this.getCards().get(0).geteRank() == eRank.ACE) || (this.getCards().get(4).geteRank() == eRank.ACE)) {
-			i = 1;
-		}
-		for (; i < this.getCards().size() - 1; i++) {
-			iDiff = (this.getCards().get(i).geteRank().getiRankNbr())
-					- (this.getCards().get(i + 1).geteRank().getiRankNbr());
-			if (iDiff == -1) {
-				bisStraight = true;
-				System.out.println("Running aaa");
-			}
-			else{
-				bisStraight = false;
-			System.out.println("Running SF");
-			break;
-			}
-			if (bisStraight) {
-				HandScorePoker HSP = (HandScorePoker) this.getHS();
-				HSP.seteHandStrength(eHandStrength.Straight);
-			}
-		}
-		return bisStraight;
-	}
-
+	
 	public boolean isThreeOfAKind() {
 		System.out.println("Running 3");
 		boolean bisThreeOfAKind = false;
